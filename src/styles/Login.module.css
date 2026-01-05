@@ -1,0 +1,41 @@
+.logo {
+  display: block;
+  width: 160px;
+  max-width: 60%;
+  height: auto;
+  margin: 0 auto 1.25rem;
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+
+.card {
+  width: 100%;
+  max-width: 380px;
+  background: var(--color-surface);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.field {
+  margin-bottom: 1rem;
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 16px;
+  margin-bottom: 0.75rem; 
+}
+
+.button {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+}
