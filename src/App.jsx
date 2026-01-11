@@ -1,11 +1,14 @@
-import WorkerDashboard from "./components/WorkerDashboard"
+import { Routes, Route } from "react-router-dom"
 import Login from "./pages/login"
 import Register from "./pages/Register"
 
 function App() {
   return (
     <div>
-      <Register />;
+      <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+    </Routes>
     </div>
   )
 }

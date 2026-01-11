@@ -1,5 +1,6 @@
 import styles from "../styles/Login.module.css"
 import logo from "../assets/RainbowGoats-logo.avif"
+import { Link } from "react-router-dom";
 
 function Login() {
   return (
