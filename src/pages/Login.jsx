@@ -20,6 +20,13 @@ function Login() {
         </div>
 
         <button className={`primary ${styles.button}`}>Log in</button>
+
+        <p className={styles.registerText}>
+  Don’t have an account?
+  <Link to="/register" className={styles.registerLink}>
+    Create account
+  </Link>
+</p>
       </div>
     </div>
   );
