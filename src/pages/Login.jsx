@@ -5,11 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 function Login() {
   const navigate = useNavigate();
   const handleLogin = () => {
-  navigate("/worker");
-};
+    navigate("/worker");
+  };
 
   return (
-
     <div className={styles.container}>
       <div className={styles.card}>
         <img src={logo} alt="Company logo" className={styles.logo} />
@@ -27,11 +26,11 @@ function Login() {
         <button className={`primary ${styles.button}`} onClick={handleLogin}>Log in</button>
 
         <p className={styles.registerText}>
-  Don’t have an account?
-  <Link to="/register" className={styles.registerLink}>
-    Create account
-  </Link>
-</p>
+          Don’t have an account?
+          <Link to="/register" className={styles.registerLink}>
+            Create account
+          </Link>
+        </p>
       </div>
     </div>
   );

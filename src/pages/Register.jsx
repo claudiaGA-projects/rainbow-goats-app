@@ -5,17 +5,17 @@ import { useNavigate } from "react-router-dom";
 
 
 function Register() {
- const [step, setStep] = useState(() => {
-  const savedStep = localStorage.getItem("registerStep");
-  return savedStep ? Number(savedStep) : 1;
-});
+  const [step, setStep] = useState(() => {
+    const savedStep = localStorage.getItem("registerStep");
+    return savedStep ? Number(savedStep) : 1;
+  });
 
   const [formData, setFormData] = useState(() => {
-  const saved = localStorage.getItem("registerData");
+    const saved = localStorage.getItem("registerData");
 
-  return saved
-    ? JSON.parse(saved)
-    : {
+    return saved
+      ? JSON.parse(saved)
+      : {
         email: "",
         password: "",
         inviteCode: "",
@@ -26,7 +26,7 @@ function Register() {
         skills: [],
         acceptMonitoring: false,
       };
-});
+  });
 
   const updateField = (field, value) => {
     setFormData((prev) => ({
@@ -34,27 +34,27 @@ function Register() {
       [field]: value,
     }));
   };
-  
-const navigate = useNavigate();
+
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
-  // TODO: send formData to backend
+    // TODO: send formData to backend
 
-  // Cleanup after successful registration
-  // localStorage.removeItem("registerData");
-  // localStorage.removeItem("registerStep");
-  navigate("/worker");
-};
+    // Cleanup after successful registration
+    // localStorage.removeItem("registerData");
+    // localStorage.removeItem("registerStep");
+    navigate("/worker");
+  };
 
   useEffect(() => {
-  localStorage.setItem("registerData", JSON.stringify(formData));
-}, [formData]);
+    localStorage.setItem("registerData", JSON.stringify(formData));
+  }, [formData]);
 
 
 
-useEffect(() => {
-  localStorage.setItem("registerStep", step);
-}, [step]);
+  useEffect(() => {
+    localStorage.setItem("registerStep", step);
+  }, [step]);
 
   return (
     <div className={styles.container}>
@@ -131,25 +131,25 @@ useEffect(() => {
               <option value="goat">Goat worker</option>
             </select>
 
-            
 
-<select
-  multiple
-  className={styles.input}
-  value={formData.skills}
-  onChange={(e) =>
-    updateField(
-      "skills",
-      Array.from(e.target.selectedOptions, (o) => o.value)
-    )
-  }
->
-  <option value="fencing">Fencing</option>
-  <option value="goat-handling">Goat handling</option>
-  <option value="machinery">Machinery</option>
-  <option value="maintenance">Maintenance</option>
-  <option value="cleaning">Cleaning</option>
-</select>
+
+            <select
+              multiple
+              className={styles.input}
+              value={formData.skills}
+              onChange={(e) =>
+                updateField(
+                  "skills",
+                  Array.from(e.target.selectedOptions, (o) => o.value)
+                )
+              }
+            >
+              <option value="fencing">Fencing</option>
+              <option value="goat-handling">Goat handling</option>
+              <option value="machinery">Machinery</option>
+              <option value="maintenance">Maintenance</option>
+              <option value="cleaning">Cleaning</option>
+            </select>
           </>
         )}
 
@@ -171,15 +171,15 @@ useEffect(() => {
         )}
 
         <button
-  className={`primary ${styles.button}`}
-  onClick={() => {
-    if (step < 4) {
-      setStep(step + 1);
-    } else {
-      handleSubmit();
-    }
-  }}
->
+          className={`primary ${styles.button}`}
+          onClick={() => {
+            if (step < 4) {
+              setStep(step + 1);
+            } else {
+              handleSubmit();
+            }
+          }}
+        >
 
           {step === 4 ? "Create account" : "Next"}
         </button>
