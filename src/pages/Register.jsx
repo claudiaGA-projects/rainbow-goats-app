@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import styles from "../styles/Register.module.css";
 import logo from "../assets/RainbowGoats-logo.avif";
+import { useNavigate } from "react-router-dom";
 
 
 function Register() {
@@ -11,6 +12,7 @@ function Register() {
 
   const [formData, setFormData] = useState(() => {
   const saved = localStorage.getItem("registerData");
+
   return saved
     ? JSON.parse(saved)
     : {
@@ -32,6 +34,8 @@ function Register() {
       [field]: value,
     }));
   };
+  
+const navigate = useNavigate();
 
   const handleSubmit = () => {
   // TODO: send formData to backend
@@ -39,6 +43,7 @@ function Register() {
   // Cleanup after successful registration
   // localStorage.removeItem("registerData");
   // localStorage.removeItem("registerStep");
+  navigate("/worker");
 };
 
   useEffect(() => {

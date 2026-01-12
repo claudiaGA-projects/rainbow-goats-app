@@ -1,8 +1,13 @@
 import styles from "../styles/Login.module.css"
 import logo from "../assets/RainbowGoats-logo.avif"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
+  const handleLogin = () => {
+  navigate("/worker");
+};
+
   return (
 
     <div className={styles.container}>
@@ -19,7 +24,7 @@ function Login() {
           <input className={styles.input} type="password" />
         </div>
 
-        <button className={`primary ${styles.button}`}>Log in</button>
+        <button className={`primary ${styles.button}`} onClick={handleLogin}>Log in</button>
 
         <p className={styles.registerText}>
   Don’t have an account?
