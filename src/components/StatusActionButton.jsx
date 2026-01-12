@@ -1,41 +1,23 @@
+import styles from "../styles/WorkerHome.module.css";
+
 function StatusActionButton({
-  labelOn,
-  labelOff,
-  isActive,
-  onToggle,
+  active,
   onClick,
-  danger,
-  opensModal,
-  modalKey,
-  setActiveModal,
+  colorOn,
+  colorOff,
+  full = false,
+  children,
 }) {
-  const handleClick = () => {
-    if (opensModal && setActiveModal) {
-      setActiveModal(modalKey);
-    }
-
-    if (onToggle) {
-      onToggle();
-    }
-
-    if (onClick) {
-      onClick();
-    }
-  };
-
   return (
     <button
-      onClick={handleClick}
-      className={`
-        status-button
-        ${isActive ? "active" : ""}
-        ${danger ? "danger" : ""}
-      `}
+      className={`${styles.button} ${styles[colorOn]} ${
+        !active ? styles[colorOff] : ""
+      } ${full ? styles.full : ""}`}
+      onClick={onClick}
     >
-      {isActive && labelOn ? labelOn : labelOff}
+      {children}
     </button>
   );
 }
 
 export default StatusActionButton;
-

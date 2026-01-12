@@ -1,57 +1,85 @@
+import styles from "../styles/WorkerHome.module.css";
 import StatusActionButton from "./StatusActionButton";
 
+function formatTime(seconds) {
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return `${m.toString().padStart(2, "0")}:${s
+    .toString()
+    .padStart(2, "0")}`;
+}
+
 function WorkerStatusCard({
+  userName,
   clockedIn,
-  setClockedIn,
-  pause,
-  setPause,
-  lunch,
-  setLunch,
-  setActiveModal,
+  startTime,
+  onClock,
+  lunchOn,
+  setLunchOn,
+  pauseOn,
+  setPauseOn,
+  lunchSeconds,
+  pauseSeconds,
 }) {
   return (
     <div>
+        <div className={styles.header}>
+          <span className={styles.userIcon}>👤</span>
+          <span>{userName}</span>
+        </div>
+        
+
       <StatusActionButton
-        labelOn="Clock out"
-        labelOff="Clock in"
-        isActive={clockedIn}
-        onToggle={() => {
-          if (clockedIn) {
-            setPause(false);
-            setLunch(false);
-            setActiveModal(null);
-          }
-          setClockedIn(!clockedIn);
-        }}
-      />
+          full
+          active={clockedIn}
+          colorOn="green"
+          colorOff="gray"
+          onClick={onClock}
+        >
+          <div>
+            {clockedIn ? "Clock Out" : "Clock In"}
+            {clockedIn && startTime && (
+              <div className={styles.subText}>
+                Started {startTime.toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </div>
+            )}
+          </div>
+        </StatusActionButton>
 
-      {clockedIn && (
-        <>
-          <StatusActionButton
-            labelOn="Pause ON"
-            labelOff="Pause"
-            isActive={pause}
-            onToggle={() => setPause(!pause)}
-            opensModal
-            modalKey="pause"
-            setActiveModal={setActiveModal}
-          />
+        {clockedIn && (
+          <>
+            <div className={styles.row}>
+              <StatusActionButton
+                active={lunchOn}
+                colorOn="yellow"
+                colorOff="gray"
+                onClick={() => setLunchOn(!lunchOn)}
+              >
+                {lunchOn? 'Lunch '+ formatTime(lunchSeconds) : 'Lunch'}
+              </StatusActionButton>
 
-          <StatusActionButton
-            labelOn="Lunch ON"
-            labelOff="Lunch break"
-            isActive={lunch}
-            onToggle={() => setLunch(!lunch)}
-          />
+              <StatusActionButton
+                active={pauseOn}
+                colorOn="orange"
+                colorOff="gray"
+                onClick={() => setPauseOn(!pauseOn)}
+              >
+                {pauseOn? 'Pause'+ formatTime(pauseSeconds) : 'Pause'}
+              </StatusActionButton>
+            </div>
 
-          <StatusActionButton
-            labelOff="Emergency"
-            onClick={() => setActiveModal("emergency")}
-            danger
-          />
-        </>
-      )}
-    </div>
+           <button
+      className={styles.emergency}
+      onClick={() => alert("Emergency sent to admin")}
+    >
+      Emergency
+           </button>
+          </>
+        )}
+      </div>
   );
 }
 
