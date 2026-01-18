@@ -15,9 +15,9 @@ function WorkerStatusCard({
   startTime,
   onClock,
   lunchOn,
-  setLunchOn,
   pauseOn,
-  setPauseOn,
+  onToggleLunch,
+  onTogglePause,
   lunchSeconds,
   pauseSeconds,
 }) {
@@ -56,7 +56,7 @@ function WorkerStatusCard({
               active={lunchOn}
               colorOn="yellow"
               colorOff="gray"
-              onClick={() => setLunchOn(!lunchOn)}
+              onClick={onToggleLunch}
             >
               {lunchOn ? 'Lunch ' + formatTime(lunchSeconds) : 'Lunch'}
             </StatusActionButton>
@@ -65,7 +65,7 @@ function WorkerStatusCard({
               active={pauseOn}
               colorOn="orange"
               colorOff="gray"
-              onClick={() => setPauseOn(!pauseOn)}
+              onClick={onTogglePause}
             >
               {pauseOn ? 'Pause' + formatTime(pauseSeconds) : 'Pause'}
             </StatusActionButton>

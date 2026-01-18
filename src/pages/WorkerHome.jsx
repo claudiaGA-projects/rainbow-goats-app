@@ -14,6 +14,21 @@ function WorkerHome() {
     const [lunchSeconds, setLunchSeconds] = useState(0);
     const [pauseSeconds, setPauseSeconds] = useState(0);
 
+    const [blockMessage, setBlockMessage] = useState(null);
+
+    const [events, setEvents] = useState([]);
+
+    const addEvent = (type, extra = {}) => {
+        setEvents((prev) => [
+            ...prev,
+            {
+                type,
+                time: new Date(),
+                ...extra,
+            },
+        ]);
+    };
+
     // timers
     useEffect(() => {
         let interval;
@@ -41,13 +56,38 @@ function WorkerHome() {
     const handleClock = () => {
         if (!clockedIn) {
             setClockedIn(true);
-            setStartTime(new Date());
+            const now = new Date();
+            setStartTime(now);
+            addEvent("clock_in");
         } else {
             setClockedIn(false);
             setLunchOn(false);
             setPauseOn(false);
+            addEvent("clock_out");
         }
     };
+
+    // Lunch/Pause relation
+    const toggleLunch = () => {
+        if (pauseOn) {
+            setBlockMessage(
+                "You are currently on pause. Stop pause to start lunch."
+            );
+            return;
+        }
+        setLunchOn((prev) => !prev);
+    };
+
+    const togglePause = () => {
+        if (lunchOn) {
+            setBlockMessage(
+                "You are currently on lunch. Stop lunch to start pause."
+            );
+            return;
+        }
+        setPauseOn((prev) => !prev);
+    };
+
 
     // Modal activo (null | "pause" | "emergency")
     // const [activeModal, setActiveModal] = useState(null);
@@ -64,16 +104,33 @@ function WorkerHome() {
                         startTime={startTime}
                         onClock={handleClock}
                         lunchOn={lunchOn}
-                        setLunchOn={setLunchOn}
                         pauseOn={pauseOn}
-                        setPauseOn={setPauseOn}
+                        onToggleLunch={toggleLunch}
+                        onTogglePause={togglePause}
                         lunchSeconds={lunchSeconds}
                         pauseSeconds={pauseSeconds}
                     />
+
+                    <pre style={{ fontSize: "0.7rem" }}>
+                        {JSON.stringify(events, null, 2)}
+                    </pre>
                 </div>
             </div>
+            {blockMessage && (
+                <div className={styles.overlay}>
+                    <div className={styles.modal}>
+                        <p>{blockMessage}</p>
+                        <button onClick={() => setBlockMessage(null)}>OK</button>
+                    </div>
+                </div>
+            )}
+
         </div>
+
     );
+
 }
 
+
 export default WorkerHome;
+
