@@ -86,11 +86,13 @@ function WorkerHome() {
             return;
         }
         setPauseOn((prev) => !prev);
+        setActiveModal("pause")
     };
 
 
     // Modal activo (null | "pause" | "emergency")
-    // const [activeModal, setActiveModal] = useState(null);
+    const [activeModal, setActiveModal] = useState(null);
+    const [pauseReason, setPauseReason] = useState("");
 
     return (
         <div>
@@ -124,6 +126,35 @@ function WorkerHome() {
                     </div>
                 </div>
             )}
+
+            {activeModal === "pause" && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modal}>
+                        <h3>Pause</h3>
+                        <textarea
+                            value={pauseReason}
+                            onChange={(e) => setPauseReason(e.target.value)}
+                            placeholder="Enter reason for pause"
+                        />
+                        <button
+                            className="primary"
+                            onClick={() => {
+                                setPauseOn(true); // activar pause
+                                addEvent("pause_start", { reason: pauseReason });
+                                setActiveModal(null); // cerrar modal
+                            }}
+                        >
+                            Start Pause
+                        </button>
+                        <button
+                            onClick={() => setActiveModal(null)}
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            )}
+
 
         </div>
 
